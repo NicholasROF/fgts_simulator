@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Simulador FGTS</title>
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Fonte Roboto do Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div class="overlay"></div>
+  <main class="container">
+    <h1>Simulador FGTS</h1>
+
+    <form id="formInputs">
+      <div class="input-group">
+        <label for="salary">Salário Mensal (R$):</label>
+        <input type="number" id="salary" min="0" step="0.01" required placeholder="Ex: 3000,00"/>
+      </div>
+
+      <div class="input-group">
+        <label for="birthMonth">Mês de Aniversário:</label>
+        <select id="birthMonth" required>
+          <option value="">– selecione –</option>
+          <option value="1">Janeiro</option>
+          <option value="2">Fevereiro</option>
+          <option value="3">Março</option>
+          <option value="4">Abril</option>
+          <option value="5">Maio</option>
+          <option value="6">Junho</option>
+          <option value="7">Julho</option>
+          <option value="8">Agosto</option>
+          <option value="9">Setembro</option>
+          <option value="10">Outubro</option>
+          <option value="11">Novembro</option>
+          <option value="12">Dezembro</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label for="initialBalanceFGTS">Saldo Atual do FGTS (R$):</label>
+        <input type="number" id="initialBalanceFGTS" min="0" step="0.01" required placeholder="Ex: 5 000,00"/>
+      </div>
+
+      <fieldset class="input-group">
+        <legend>Rendimento do Investimento Pessoal:</legend>
+        <div class="radio-group">
+          <input type="radio" name="personalType" id="personalAnual" value="anual" checked/>
+          <label for="personalAnual">Anual (%)</label>
+          <input type="radio" name="personalType" id="personalMensal" value="mensal"/>
+          <label for="personalMensal">Mensal (%)</label>
+        </div>
+        <input type="number" id="personalReturn" min="0" step="0.01" required placeholder="Ex: 8,00"/>
+      </fieldset>
+
+      <div class="input-group">
+        <label for="trFgts">Taxa Referencial (TR) Mensal do FGTS (%):</label>
+        <input type="number" id="trFgts" min="0" step="0.001" required placeholder="Ex: 0,40"/>
+        <small class="help-text">
+          <span class="italic">O FGTS rende <strong>3% ao ano + TR mensal</strong>.</span>
+        </small>
+      </div>
+
+      <button type="button" id="btnCalcular">Calcular</button>
+    </form>
+
+    <div id="resultados"></div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
