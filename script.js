@@ -1,19 +1,19 @@
 // Função para obter parâmetros do Saque‐Aniversário conforme faixas oficiais
 function getSaqueAniversarioParams(saldo) {
     if (saldo <= 500.00) {
-      return { perc: 0.50, adicional: 50.00 };
+      return { perc: 0.50, adicional: 0.00 };
     } else if (saldo <= 1000.00) {
-      return { perc: 0.40, adicional: 150.00 };
+      return { perc: 0.40, adicional: 50.00 };
     } else if (saldo <= 5000.00) {
-      return { perc: 0.30, adicional: 650.00 };
+      return { perc: 0.30, adicional: 150.00 };
     } else if (saldo <= 10000.00) {
-      return { perc: 0.20, adicional: 1150.00 };
+      return { perc: 0.20, adicional: 650.00 };
     } else if (saldo <= 15000.00) {
-      return { perc: 0.15, adicional: 1900.00 };
+      return { perc: 0.15, adicional: 1150.00 };
     } else if (saldo <= 20000.00) {
-      return { perc: 0.10, adicional: 2650.00 };
+      return { perc: 0.10, adicional: 1900.00 };
     } else {
-      return { perc: 0.05, adicional: 4500.00 };
+      return { perc: 0.05, adicional: 2900.00 };
     }
   }
   
@@ -92,6 +92,8 @@ function getSaqueAniversarioParams(saldo) {
       }
       const saldoAposSaque = saldoAtualizadoA - valorSaque;
       investPersonal = investPersonal * (1 + monthlyRatePersonal) + valorSaque;
+      valorFinal = investPersonal + (saldoAposSaque * 0.4);
+
   
       tableA.push({
         mes: m,
@@ -102,7 +104,8 @@ function getSaqueAniversarioParams(saldo) {
         balanceBeforeWithdraw: saldoAtualizadoA,
         withdraw: valorSaque,
         balanceAfterWithdraw: saldoAposSaque,
-        investAccum: investPersonal
+        investAccum: investPersonal,
+        finalBalance: valorFinal
       });
   
       balanceFGTSA = saldoAposSaque;
@@ -144,6 +147,7 @@ function getSaqueAniversarioParams(saldo) {
               <th>Saque<br>(R$)</th>
               <th>Pós‐Saque<br>(R$)</th>
               <th>Inv. Pessoal<br>(R$)</th>
+              <th>Saldo Final<br>(R$)</th>
             </tr>
           </thead>
           <tbody>
@@ -159,6 +163,7 @@ function getSaqueAniversarioParams(saldo) {
           <td>${row.withdraw.toFixed(2)}</td>
           <td>${row.balanceAfterWithdraw.toFixed(2)}</td>
           <td>${row.investAccum.toFixed(2)}</td>
+          <td>${row.finalBalance.toFixed(2)}</td>
         </tr>
       `;
     });
@@ -208,7 +213,7 @@ function getSaqueAniversarioParams(saldo) {
     // 7. Encontrar “break-even” em meses
     let breakMonth = null;
     for (let i = 0; i < tableA.length; i++) {
-      const valorInvestA = tableA[i].investAccum;
+      const valorInvestA = tableA[i].finalBalance;
       const valorDemB = tableB[i].valueIfDismissed;
       if (valorInvestA >= valorDemB) {
         breakMonth = i + 1;
